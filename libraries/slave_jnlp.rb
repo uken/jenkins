@@ -89,11 +89,11 @@ class Chef
         r.backup(false)
         r.mode('0755')
         r.atomic_update(false)
-        r.notifies :restart, "runit_service[#{new_resource.service_name}]" unless Chef::Platform.windows?
       end
 
       # The Windows's specific child class manages it's own service
-      return if Chef::Platform.windows?
+      # and Mac OS X handles it's own service
+      return if Chef::Platform.windows? || node['platform'] == 'mac_os_x'
 
       include_recipe 'runit'
 
