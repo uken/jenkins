@@ -62,7 +62,7 @@ class Chef
         action :create
       end
 
-      unless Chef::Platform.windows?
+      unless Chef::Platform.windows? || node['platform'] == 'mac_os_x'
         declare_resource(:group, new_resource.group) do
           system(node['jenkins']['master']['use_system_accounts'])
         end
